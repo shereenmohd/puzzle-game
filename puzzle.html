@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Color Puzzle Blocks</title>
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="puzzle.css" />
+</head>
+<body>
+  <h1>🎨 Color Puzzle Blocks</h1>
+
+  <div id="controls">
+  <div id="timer">⏱ Time: 1:00</div>
+  <button id="start-btn">Start Game</button>
+  <div id="win-message" class="hidden">
+    YAY You Win! <button id="restart-btn">let's Play Again?</button>
+  </div>
+  <div id="lose-message" class="hidden">
+    ⏱ oh oh Time's up! You losttt. <button id="restart-btn-lose">Try Again</button>
+  </div>
+</div>
+
+  <div id="game-container" class="hidden">
+    <div id="game-board"></div>
+  </div>
+
+  <script src="puzzle.js"></script>
+
+  <!-- Animated colorful blocks background -->
+<div class="floating-bg">
+  <span style="left: 10%; animation-delay: 0s; background-color: red;"></span>
+  <span style="left: 30%; animation-delay: 3s; background-color: blue;"></span>
+  <span style="left: 50%; animation-delay: 1s; background-color: orange;"></span>
+  <span style="left: 70%; animation-delay: 2s; background-color: green;"></span>
+  <span style="left: 90%; animation-delay: 4s; background-color: purple;"></span>
+  <span style="left: 20%; animation-delay: 6s; background-color: red;"></span>
+  <span style="left: 40%; animation-delay: 5s; background-color: blue;"></span>
+  <span style="left: 60%; animation-delay: 7s; background-color: orange;"></span>
+  <span style="left: 80%; animation-delay: 8s; background-color: green;"></span>
+</div>
+
+
+</body>
+</html>
+
+
