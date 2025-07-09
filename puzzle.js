@@ -1,3 +1,5 @@
+// puzzle.js
+
 const board = document.getElementById("game-board");
 const startBtn = document.getElementById("start-btn");
 const winMessage = document.getElementById("win-message");
@@ -7,28 +9,31 @@ const restartBtnLose = document.getElementById("restart-btn-lose");
 const gameContainer = document.getElementById("game-container");
 const timerDisplay = document.getElementById("timer");
 
-const COLORS = ["#bcd9a5", "#f9f885", "#fbbb84", "#edc7f3", "#d7fff7"];
+const BASE_COLORS = ["#bcd9a5", "#f9f885", "#fbbb84", "#edc7f3", "#d7fff7"];
 const ROWS = 7;
 const COLUMNS = 5;
-const TOTAL_BLOCKS = ROWS * COLUMNS;
-const GAME_DURATION = 60; // seconds
+const GAME_DURATION = 60;
 
+let COLORS = [];
+let TOTAL_BLOCKS = ROWS * COLUMNS;
 let selectedBlock = null;
 let timer = null;
 let timeLeft = GAME_DURATION;
 let gameEnded = false;
+let level = 1;
 
 // Start or restart the game
-startBtn.addEventListener("click", startGame);
-restartBtn.addEventListener("click", startGame);
-restartBtnLose.addEventListener("click", startGame);
+startBtn.addEventListener("click", () => startGame(level));
+restartBtn.addEventListener("click", () => startGame(++level));
+restartBtnLose.addEventListener("click", () => {
+  level = 1;
+  startGame(level);
+});
 
-function startGame() {
-  // Reset game state
+function startGame(currentLevel) {
   gameEnded = false;
   timeLeft = GAME_DURATION;
   clearInterval(timer);
-
   timerDisplay.textContent = formatTime(timeLeft);
   timer = setInterval(updateTimer, 1000);
 
@@ -37,10 +42,19 @@ function startGame() {
   board.innerHTML = "";
   gameContainer.classList.remove("hidden");
 
-  // Generate color blocks
+  // Use more colors as level increases (max 5)
+  const colorCount = Math.min(BASE_COLORS.length, 3 + Math.floor(currentLevel / 2));
+  COLORS = BASE_COLORS.slice(0, colorCount);
+
+  // Optional: update title text
+  document.querySelector("h1").textContent = `🎨 Color Puzzle Blocks - Level ${level}`;
+
+  TOTAL_BLOCKS = ROWS * COLUMNS;
+
+  // Create color pool
   let colorPool = [];
   for (let i = 0; i < ROWS; i++) colorPool.push(...COLORS);
-  colorPool = shuffle(colorPool);
+  colorPool = shuffle(colorPool).slice(0, TOTAL_BLOCKS);
 
   for (let i = 0; i < TOTAL_BLOCKS; i++) {
     const block = document.createElement("div");
@@ -92,7 +106,6 @@ function checkWinCondition() {
     }
   }
 
-  // All columns match
   endGame("win");
 }
 
